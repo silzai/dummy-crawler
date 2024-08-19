@@ -30,18 +30,23 @@ def get_page_source(driver : webdriver.Chrome, url):
 
     element = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.TAG_NAME, "h1")))
     element.click()
-
     time.sleep(random.uniform(0.5, 2))
+    content = element.get_attribute('outerHTML')
+    return content
 
 def main():
 
     driver = setup_chromedriver()
 
+    os.makedirs('./output', exist_ok=True)
+
     url = 'http://example.com/'
 
-    while(True):
-        get_page_source(driver, url)
-
+    for i in range(10):
+        content = get_page_source(driver, url)
+        with open(f"./output/{i}.html", 'w', encoding="utf-8") as f:
+                f.write(f"{content}")
+	
     driver.close()
 
 if __name__ == "__main__":
