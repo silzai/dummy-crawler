@@ -32,6 +32,7 @@ def get_page_source(driver : webdriver.Chrome, url):
     element.click()
     time.sleep(random.uniform(0.5, 2))
     content = element.get_attribute('outerHTML')
+    print(content)
     return content
 
 def main():
